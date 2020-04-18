@@ -35,8 +35,9 @@ services:
             
     #     ports: 
     #         - 8087:8087
-    # vegeta:
-    #     image: peterevans/vegeta
+    vegeta:
+        build: docker/vegeta
+        container_name: vegeta
 
 volumes:
     db-data: {}
