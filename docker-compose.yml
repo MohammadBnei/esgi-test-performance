@@ -1,0 +1,40 @@
+version: '3.6'
+services:
+    php:
+        build: php-project
+        volumes:
+            - './php-project/:/usr/share/nginx/html:consistent'
+        depends_on:
+            - db
+    nginx:
+        build: nginx
+        ports:
+            - '8080:80'
+        volumes:
+            - './php-project/:/usr/share/nginx/html:consistent'
+        depends_on:
+            - php
+    db:
+        image: 'mysql'
+        volumes:
+            - 'db-data:/var/lib/mysql:consistent'
+        ports:
+            - '3306:3306'
+        environment:
+            - MYSQL_DATABASE=snowtricks
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=password
+            - MYSQL_ROOT_PASSWORD=password
+    # performance:
+    #     image: blackfire/blackfire
+    #     container_name: performance
+    #     environment: 
+    #         - BLACKFIRE_LOG_LEVEL: 4
+            
+    #     ports: 
+    #         - 8087:8087
+    # vegeta:
+    #     image: peterevans/vegeta
+
+volumes:
+    db-data: {}
