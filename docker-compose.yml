@@ -1,13 +1,15 @@
 version: '3.6'
 services:
     php:
-        build: php-project
+        build: docker/php
         volumes:
             - './php-project/:/usr/share/nginx/html:consistent'
+        env_file: ./docker/php/.env
         depends_on:
             - db
+        stdin_open: true
     nginx:
-        build: nginx
+        build: docker/nginx
         ports:
             - '8080:80'
         volumes:
@@ -29,7 +31,7 @@ services:
     #     image: blackfire/blackfire
     #     container_name: performance
     #     environment: 
-    #         - BLACKFIRE_LOG_LEVEL: 4
+    #         - BLACKFIRE_LOG_LEVEL:4
             
     #     ports: 
     #         - 8087:8087
